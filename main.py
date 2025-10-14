@@ -1,3 +1,5 @@
+from adodbapi.examples.xls_read import extended
+
 import fibonacci as fib
 import graph as graph
 
@@ -8,7 +10,8 @@ if __name__ == '__main__':
     my_graph.add_e(2,3)
     my_graph.add_e(1,4)
     my_graph.print()
+    extended = []
     searched = []
-    print(my_graph.DFS(1, searched))
+    # print(my_graph.DFS(1, extended, searched ))
 
 

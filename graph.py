@@ -30,9 +30,12 @@ class Graph:
         for key in self.graph.keys():
             print(key,self.graph[key])
 
-    def DFS(self, begin, searched):
-        searched.append(begin)
+    def DFS(self, begin, extended, searched):
+        extended.append(begin)
         for value in self.graph[begin]:
-            if value not in searched:
-                self.DFS(value, searched)
+            if value not in extended or value not in searched:
+                extended.append(value)
+                self.DFS(value, extended, searched)
+            searched.append(value)
+
         return searched
