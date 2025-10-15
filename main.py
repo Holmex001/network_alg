@@ -1,4 +1,4 @@
-from adodbapi.examples.xls_read import extended
+import queue
 
 import fibonacci as fib
 import graph as graph
@@ -9,9 +9,25 @@ if __name__ == '__main__':
     my_graph.add_e(1,3)
     my_graph.add_e(2,3)
     my_graph.add_e(1,4)
+
     my_graph.print()
-    extended = []
-    searched = []
-    # print(my_graph.DFS(1, extended, searched ))
+    pre = []
+    post = []
+    print(my_graph.DFS(1, pre, post ))
+    Q = queue.Queue()
+    post = []
+    print(my_graph.BFS(1))
+    print(my_graph.find_unconnected_numb())
+
+    rev_graph = my_graph.get_rev_graph()
+    rev_graph = graph.Graph(rev_graph)
+    rev_graph.print()
+
+    pre = []
+    post = []
+    note_num = {}
+    note_num = my_graph.get_DFS_num(1,pre,post,note_num)
+
+    print(note_num)
 
 
