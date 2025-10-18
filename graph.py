@@ -166,13 +166,14 @@ post = []
 # rev_graph = Graph(rev_graph)
 # rev_graph.print()
 # my_graph.print()
-ssc_s = my_graph.get_SSC(1)
-size = len(ssc_s)
-for i in range(0, size):
-    print("SSC:",i)
-    ssc_s[i].print()
-
-print(my_graph.topological_sort(1, pre, post))
+#
+# ssc_s = my_graph.get_SSC(1)
+# size = len(ssc_s)
+# for i in range(0, size):
+#     print("SSC:",i)
+#     ssc_s[i].print()
+#
+# print(my_graph.topological_sort(1, pre, post))
 
 
 
