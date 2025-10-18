@@ -23,11 +23,6 @@ if __name__ == '__main__':
     rev_graph = graph.Graph(rev_graph)
     rev_graph.print()
 
-    pre = []
-    post = []
-    note_num = {}
-    note_num = my_graph.get_DFS_num(1,pre,post,note_num)
-
-    print(note_num)
-
+    ssc_s = my_graph.get_SSC(1)
+    print(ssc_s[0].print())
 
