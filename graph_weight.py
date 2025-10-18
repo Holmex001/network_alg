@@ -1,6 +1,8 @@
 import time
 import random
 
+
+
 # 割
 class Edge:
     def __init__(self, edge: list = None):
@@ -100,6 +102,7 @@ def Prim(graph:GraphWeight, begin):
     visited.append(begin)
     edges = graph.get_edge(visited)
     MST = GraphWeight()
+    weight_all = 0
     for edge in edges:
         heap.insert(edge)
     #开始循环
@@ -109,7 +112,8 @@ def Prim(graph:GraphWeight, begin):
         MST.add_e_both(min_edge[1],min_edge[2],min_edge[0])
         new_edges = graph.get_edge(visited)
         heap = Heap(new_edges)
-    return MST
+        weight_all+= min_edge[0]
+    return MST,weight_all
 
 
 class UnionFind:
@@ -129,6 +133,7 @@ class UnionFind:
 
 def Kruskal(graph:GraphWeight):
     edges = Edge()
+    weight_all = 0
     for begin in graph.graph.keys():
         for end in graph.graph[begin]:
             if begin < end[0]:
@@ -143,7 +148,8 @@ def Kruskal(graph:GraphWeight):
         if uf.find(begin) != uf.find(end):
             uf.union(begin,end)
             MST.add_e_both(begin,end,weight)
-    return MST
+            weight_all += weight
+    return MST,weight_all
 
 
 
@@ -161,34 +167,49 @@ def Kruskal(graph:GraphWeight):
 # print("MST_Kruskal")
 # Kruskal(my_graph).print()
 
-# 实验计时模块
-def generate_random_graph(n, density=0.5):
-    gw = GraphWeight()
-    for u in range(n):
-        for v in range(u + 1, n):
-            if random.random() < density:
-                w = random.randint(1, 100)
-                gw.add_e_both(u, v, w)
-    return gw
+# # 实验计时模块
+# def generate_random_graph(n, density=0.5):
+#     gw = GraphWeight()
+#     for u in range(n):
+#         for v in range(u + 1, n):
+#             if random.random() < density:
+#                 w = random.randint(1, 100)
+#                 gw.add_e_both(u, v, w)
+#     return gw
+#
+# def run_time_experiment():
+#     sizes = [10, 20, 40, 80]
+#     print("节点数\tPrim时间(s)\tKruskal时间(s)")
+#     for n in sizes:
+#         graph = generate_random_graph(n, density=0.4)
+#
+#         # Prim 计时
+#         start = time.time()
+#         prim_mst = Prim(graph, 0)  # 你原来的 Prim
+#         prim_time = time.time() - start
+#
+#         # Kruskal 计时
+#         start = time.time()
+#         kruskal_mst = Kruskal(graph)  # 你原来的 Kruskal
+#         kruskal_time = time.time() - start
+#
+#         print(f"{n}\t{prim_time:.6f}\t{kruskal_time:.6f}")
+#
+# # ================= 运行实验 =================
+# if __name__ == "__main__":
+#     run_time_experiment()
+graph = GraphWeight()
+n,m = input().split()
+for i in range(0, int(m)):
+    u,v,w = input().split()
+    graph.add_e_both(int(u),int(v),int(w))
+# graph.print()
+# print("MST_Prim")
+# MST,weight = Prim(graph,1)
+# print(weight)
+# MST.print()
+# print("MST_Kruskal")
+MST,weight = Kruskal(graph)
+# MST.print()
+print(weight)
 
-def run_time_experiment():
-    sizes = [10, 20, 40, 80]
-    print("节点数\tPrim时间(s)\tKruskal时间(s)")
-    for n in sizes:
-        graph = generate_random_graph(n, density=0.4)
-
-        # Prim 计时
-        start = time.time()
-        prim_mst = Prim(graph, 0)  # 你原来的 Prim
-        prim_time = time.time() - start
-
-        # Kruskal 计时
-        start = time.time()
-        kruskal_mst = Kruskal(graph)  # 你原来的 Kruskal
-        kruskal_time = time.time() - start
-
-        print(f"{n}\t{prim_time:.6f}\t{kruskal_time:.6f}")
-
-# ================= 运行实验 =================
-if __name__ == "__main__":
-    run_time_experiment()
