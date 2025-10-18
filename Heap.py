@@ -32,7 +32,7 @@ class Heap:
         self.heap[idx0] = self.heap[idx1]
         self.heap[idx1] = temp
 
-my_heap = Heap([1,2,3,4,5,6])
+my_heap = Heap([1,2,3,2,5,6])
 my_heap.heapify()
 print(my_heap.heap)
 my_heap.exact_min()
