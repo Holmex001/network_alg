@@ -1,7 +1,6 @@
 # 我要自己写图的结构
 import queue
 
-
 class Graph:
     def __init__(self, graph: dict = None):
         if graph is None:
