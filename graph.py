@@ -11,6 +11,7 @@ class Graph:
 
         self.num = None
 
+    #添加无向边
     def add_e_both(self, begin, end):
         if begin in self.graph.keys():
             self.graph[begin].append(end)
@@ -21,6 +22,7 @@ class Graph:
         else:
             self.graph[end] = [begin]
 
+    #添加有向边
     def add_e_one(self, begin, end):
         if begin in self.graph.keys():
             self.graph[begin].append(end)
@@ -37,7 +39,7 @@ class Graph:
 
         print("不存在这条边")
 
-
+    #打印邻接链表
     def print(self):
         for key in self.graph.keys():
             print(key,self.graph[key])
@@ -67,6 +69,7 @@ class Graph:
             post.append(v)
         return post
 
+    #找到有多少个连通的图
     def find_unconnected_numb(self):
         post = []
         notes = self.graph.keys()
@@ -79,6 +82,7 @@ class Graph:
 
         return counter
 
+    #把图的边反向 Two Pass 的第一步
     def get_rev_graph(self):
         rev_graph = {}
 
@@ -106,6 +110,7 @@ class Graph:
 
         return post
 
+    #找强连通分量 Two Pass
     def get_SSC(self,begin):
         rev_graph = self.get_rev_graph()
         rev_graph = Graph(rev_graph)
@@ -131,6 +136,7 @@ class Graph:
 
         return ssc_s
 
+    # 拓扑排序
     def topological_sort(self, begin, pre, post):
         self.DFS(begin, pre, post)
         post.reverse()
