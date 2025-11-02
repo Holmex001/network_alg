@@ -2,13 +2,20 @@
 import queue
 
 class Graph:
+    # def __init__(self, graph: dict = None):
+    #     if graph is None:
+    #         self.graph = {}
+    #     else:
+    #         self.graph = graph
+    #
+    #     self.num = None
     def __init__(self, graph: dict = None):
         if graph is None:
-            self.graph = {}
+            self.graph = {}          # 原邻接表：node -> [node, ...]
         else:
             self.graph = graph
-
-        self.num = None
+        # 新增：边权记录  (u,v)->w
+        self.weight = {}
 
     #添加无向边
     def add_e_both(self, begin, end):
@@ -142,7 +149,30 @@ class Graph:
 
         return post
 
+# ========== 以下为新增：带权接口 ==========
 
+    def add_weighted_edge(self, u, v, w: int):
+        """有向带权边"""
+        if u not in self.graph:
+            self.graph[u] = []
+        if v not in self.graph[u]:
+            self.graph[u].append(v)
+        self.weight[(u, v)] = w
+
+    def to_weighted_list(self) -> list:
+        """
+        把当前图转成  list[ list[(v,w), ...] ]  形式
+        节点编号 0..n-1  连续
+        """
+        nodes = sorted(self.graph.keys())
+        idx = {v: i for i, v in enumerate(nodes)}
+        n = len(nodes)
+        adj = [[] for _ in range(n)]
+        for u in self.graph:
+            for v in self.graph[u]:
+                w = self.weight.get((u, v), 1)   # 默认权重 1（兼容老代码）
+                adj[idx[u]].append((idx[v], w))
+        return adj, nodes          # 返回邻接表 + 原始节点顺序
 
 
 my_graph = Graph()
