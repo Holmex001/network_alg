@@ -9,13 +9,16 @@ class Graph:
     #         self.graph = graph
     #
     #     self.num = None
-    def __init__(self, graph: dict = None):
+    def __init__(self, graph: dict = None, weight: dict = None):
         if graph is None:
             self.graph = {}          # 原邻接表：node -> [node, ...]
         else:
             self.graph = graph
         # 新增：边权记录  (u,v)->w
-        self.weight = {}
+        if weight is None:
+            self.weight = {}
+        else:
+            self.weight = weight
 
     #添加无向边
     def add_e_both(self, begin, end):
@@ -159,6 +162,20 @@ class Graph:
             self.graph[u].append(v)
         self.weight[(u, v)] = w
 
+    def add_no_direct_weighted_edge(self, u, v, w: int):
+        """无向带权边"""
+        if u not in self.graph:
+            self.graph[u] = []
+        if v not in self.graph[u]:
+            self.graph[u].append(v)
+        self.weight[(u, v)] = w
+
+        if v not in self.graph:
+            self.graph[v] = []
+        if u not in self.graph[v]:
+            self.graph[v].append(u)
+        self.weight[(v, u)] = w
+
     def to_weighted_list(self) -> list:
         """
         把当前图转成  list[ list[(v,w), ...] ]  形式
@@ -174,17 +191,25 @@ class Graph:
                 adj[idx[u]].append((idx[v], w))
         return adj, nodes          # 返回邻接表 + 原始节点顺序
 
+    def print_weighted_graph(self):
+        for u in self.graph:
+            edges = []
+            for v in self.graph[u]:
+                w = self.weight.get((u, v), 1)
+                edges.append(f"({v}, weight={w})")
+            print(f"{u} -> {', '.join(edges)}")
+
 
 my_graph = Graph()
-my_graph.add_e_one(1,3)
-my_graph.add_e_one(2,3)
-my_graph.add_e_one(1,4)
-my_graph.add_e_one(3,4)
-my_graph.add_e_one(4,2)
+# my_graph.add_e_one(1,3)
+# my_graph.add_e_one(2,3)
+# my_graph.add_e_one(1,4)
+# my_graph.add_e_one(3,4)
+# my_graph.add_e_one(4,2)
 
-my_graph.print()
-pre = []
-post = []
+# my_graph.print()
+# pre = []
+# post = []
 # print(my_graph.DFS(1, pre, post ))
 # Q = queue.Queue()
 # post = []
@@ -203,6 +228,19 @@ post = []
 #     ssc_s[i].print()
 #
 # print(my_graph.topological_sort(1, pre, post))
+
+# my_graph.add_no_direct_weighted_edge(1,2,1)
+# my_graph.add_no_direct_weighted_edge(1,3,2)
+# my_graph.add_no_direct_weighted_edge(2,3,3)
+# my_graph.add_no_direct_weighted_edge(2,4,1)
+# my_graph.print_weighted_graph()
+# weight = my_graph.weight
+# graph = my_graph.graph
+# print(graph)
+#
+# print(weight)
+# print(weight[(1,3)])
+
 
 
 
